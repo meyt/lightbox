@@ -68,7 +68,7 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
     modal_shown: function() {
       var video_id;
       if (!this.options.remote) {
-        return this.error('No remote target given');
+        return this.error(this.options.error_no_targetMessage);
       } else {
         this.gallery = this.$element.data('gallery');
         if (this.gallery) {
@@ -110,7 +110,7 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
           } else if (this.options.type === 'video') {
             return this.showVideoIframe(this.options.remote);
           } else {
-            return this.error("Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo|instagram|url|video\"");
+            return this.error(this.options.error_detectMessage);
           }
         } else {
           return this.detectRemoteType(this.options.remote);
@@ -352,7 +352,7 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
         })(this);
         img.onerror = (function(_this) {
           return function() {
-            return _this.error('Failed to load image: ' + src);
+            return _this.error(_this.options.error_fail_loadMessage + src);
           };
         })(this);
       }
@@ -429,6 +429,9 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
     no_related: false,
     scale_height: true,
     loadingMessage: 'Loading...',
+    error_detectMessage: "Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo|instagram|url|video\"",
+    error_fail_loadMessage: 'Failed to load image: ',
+    error_no_targetMessage: 'No remote target given',
     onShow: function() {},
     onShown: function() {},
     onHide: function() {},
