@@ -14,6 +14,7 @@ EkkoLightbox = ( element, options ) ->
 		title : null
 		footer : null
 		remote : null
+		errors : null
 	}, $.fn.ekkoLightbox.defaults, options || {})
 
 	@$element = $(element)
@@ -70,7 +71,7 @@ EkkoLightbox.prototype = {
 	modal_shown: ->
 		# when the modal first loads
 		if !@options.remote
-			@error @options.error_no_targetMessage
+			@error @options.errors.no_target
 			
 		else
 
@@ -109,7 +110,7 @@ EkkoLightbox.prototype = {
 				else if @options.type == 'video'
 					@showVideoIframe(@options.remote)
 				else
-					@error @options.error_detectMessage
+					@error @options.errors.detect
 
 			else
 				@detectRemoteType(@options.remote)
@@ -297,7 +298,7 @@ EkkoLightbox.prototype = {
 						@resize img.width
 					@options.onContentLoaded.call(@)
 			img.onerror = =>
-				@error @options.error_fail_loadMessage  + src
+				@error @options.errors.fail_load  + src
 
 		img.src = src
 		img
@@ -375,9 +376,10 @@ $.fn.ekkoLightbox.defaults = {
 	no_related: false
 	scale_height: true #scales height and width if the image is taller than window size
 	loadingMessage: 'Loading...',
-	error_detectMessage: "Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo|instagram|url|video\"",
-	error_fail_loadMessage: 'Failed to load image: ',
-	error_no_targetMessage: 'No remote target given',
+	errors: {
+		detect: "Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo|instagram|url|video\"",
+		fail_load: 'Failed to load image: ',
+		no_target: 'No remote target given'}
 	onShow : ->
 	onShown : ->
 	onHide : ->
